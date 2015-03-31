@@ -1,0 +1,21 @@
+{
+  "name": "nem-c/IP2LocLite",
+  "description": "Laravel 4 integration for IP2Loc Lite with database support and download",
+  "authors": [
+    {
+      "name": "Nem C",
+      "email": "nem@codeanvil.co",
+      "homepage": "http://www.codeanvil.co",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "NemC\\IP2LocLite": "src/"
+    }
+  }
+}
