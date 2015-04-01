@@ -12,4 +12,6 @@ return [
     'table' => 'ip2loc',
 
     'loginPath' => 'https://www.ip2location.com/login',
+
+    'storagePath' => storage_path('ip2loclite'),
 ];
