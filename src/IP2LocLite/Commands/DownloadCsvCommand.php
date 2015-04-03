@@ -2,7 +2,7 @@
 
 namespace NemC\IP2LocLite\Commands;
 
-use Illuminate\Console\Config,
+use Illuminate\Support\Facades\Config,
     Illuminate\Console\Command,
     NemC\IP2LocLite\Services\IP2LocLiteService,
     NemC\IP2LocLite\Exceptions\NotLoggedInResponseException,
