@@ -5,6 +5,7 @@ namespace NemC\IP2LocLite\Providers;
 use Exception,
     Illuminate\Support\ServiceProvider,
     Illuminate\Support\Facades\File,
+    NemC\IP2LocLite\Helpers\IP2LocLiteHelper,
     NemC\IP2LocLite\Commands\LoginCommand,
     NemC\IP2LocLite\Commands\DownloadCsvCommand,
     NemC\IP2LocLite\Commands\ImportCsvCommand;
@@ -41,6 +42,8 @@ class IP2LocLiteServiceProvider extends ServiceProvider
         $this->registerLoginCommand();
         $this->registerDownloadCsv();
         $this->registerImportCsv();
+
+        $this->registerIP2LocLiteFacade();
     }
 
     protected function registerLoginCommand()
@@ -75,15 +78,30 @@ class IP2LocLiteServiceProvider extends ServiceProvider
         $this->commands('nemc_ip2loclite_import_csv');
     }
 
-    protected function verifyConfig($app)
+    protected function registerIP2LocLiteFacade()
+    {
+        $this->app['nemc_ip2loc-lite_helper'] = $this->app->share(function ($app) {
+            return new IP2LocLiteHelper(
+                $app->make('NemC\IP2LocLite\Services\IP2LocLiteService'),
+                $app->make('NemC\IP2LocLite\Storage\IP2LocStorageManager')
+            );
+        });
+
+        $this->app->booting(function () {
+            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+            $loader->alias('IP2LocLite', 'NemC\IP2LocLite\Facades\IP2LocLite');
+        });
+    }
+
+    private function verifyConfig($app)
     {
         $config = $app['config']->get('ip2loc-lite');
         if (empty($config) === true) {
             throw new Exception('Looks like you are missing configuration for ip2loc-lite');
         }
 
-        if (empty($config['username']) === true || empty($config['password']) === true) {
-            throw new Exception('You need to provide your IP2Location username and password');
+        if (empty($config['username']) === true || empty($config['password']) === true || empty($config['database'])) {
+            throw new Exception('You need to provide your IP2Location username and password and database name to download');
         }
     }
 }

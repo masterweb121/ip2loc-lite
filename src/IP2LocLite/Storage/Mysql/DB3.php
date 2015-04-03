@@ -61,8 +61,8 @@ class DB3 implements IP2LocStorageInterface
         $results = DB::select("
             SELECT *
             FROM {$this->tableName}
-            WHERE long_from >= ?
-            AND long_to <= ?
+            WHERE long_from <= ?
+            AND long_to >= ?
             LIMIT 1
         ", [$longIp, $longIp]);
 

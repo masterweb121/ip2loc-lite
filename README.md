@@ -13,11 +13,6 @@ Revision one supports only DB3 that has Country Abbreviation code, Country name,
 Future updates will cover other 4 different databases.
 Note that there is no information about State/Region Abbreviation code.
 
-Script brings 3 new commands:
-- ip2loclite:login
-- ip2loclite:download-csv <database name to download>
-- ip2loclite:import-csv <database name to download>
-
 Installation
 ------------
 
@@ -48,16 +43,16 @@ Usage
 -----
 
 ```bash
-$ php artisan ip2loclite:download-csv DB3LITE
+$ php artisan ip2loclite:download-csv
 ```
 
 ```bash
-$ php ip2loclite:import-csv DB3LITE
+$ php ip2loclite:import-csv
 ```
 
 Automate whole process by chaining those 2 commands like
 ```bash
-$ php artisan ip2loclite:download-csv DB3LITE && php ip2loclite:import-csv DB3LITE
+$ php artisan ip2loclite:download-csv && php ip2loclite:import-csv
 ```
 
 
@@ -73,6 +68,7 @@ return [
     'username' => '', //your IP2Location account username
     'password' => '', //your IP2Location account password
     'rememberMe' => 'on',
+    'database' => 'DB3LITE',
 ];
 ```
 

@@ -5,7 +5,6 @@ namespace NemC\IP2LocLite\Commands;
 use ZipArchive,
     Illuminate\Console\Command,
     Illuminate\Support\Facades\Config,
-    Symfony\Component\Console\Input\InputArgument,
     NemC\IP2LocLite\Services\IP2LocLiteService,
     NemC\IP2LocLite\Storage\IP2LocStorageManager as StorageManager,
     NemC\IP2LocLite\Exceptions\UnsupportedDatabaseCommandException,
@@ -30,7 +29,7 @@ class ImportCsvCommand extends Command
 
     public function fire()
     {
-        $database = $this->argument('database');
+        $database = Config::get('ip2loc-lite.database');
         try {
             $this->ip2LocLite->isSupportedDatabase($database);
         } catch (UnsupportedDatabaseCommandException $e) {
@@ -73,12 +72,5 @@ class ImportCsvCommand extends Command
 
         fclose($csvHandle);
         $this->info('Finished - Processed ' . $rows . ' location entries for ' . $database);
-    }
-
-    public function getArguments()
-    {
-        return array(
-            array('database', InputArgument::REQUIRED, 'Database name to import'),
-        );
     }
 }

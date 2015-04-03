@@ -2,8 +2,7 @@
 
 namespace NemC\IP2LocLite\Services;
 
-use Illuminate\Support\Facades\App,
-    Illuminate\Support\Facades\Config,
+use Illuminate\Support\Facades\Config,
     Illuminate\Support\Facades\File,
     GuzzleHttp\Client as CurlClient,
     GuzzleHttp\Exception\RequestException,
@@ -11,8 +10,7 @@ use Illuminate\Support\Facades\App,
     NemC\IP2LocLite\Exceptions\NotOkResponseException,
     NemC\IP2LocLite\Exceptions\NotLoggedInResponseException,
     NemC\IP2LocLite\Exceptions\UnsupportedDatabaseCommandException,
-    NemC\IP2LocLite\Exceptions\ArchiveMissingException,
-    NemC\IP2LocLite\Exceptions\UnsupportedStorageEngine;
+    NemC\IP2LocLite\Exceptions\ArchiveMissingException;
 
 class IP2LocLiteService
 {
@@ -157,16 +155,5 @@ class IP2LocLiteService
     {
         $dbVersion = str_replace('LITE', '', $database);
         return $dbVersion;
-    }
-
-    public function loadRepository($database)
-    {
-        if (Config::get('ip2loc-lite::config.storage') !== 'mysql') {
-            throw new UnsupportedStorageEngine('Version 1 supports only mySQL as storage engine');
-        }
-
-        $storageEngine = ucfirst(strtolower(Config::get('ip2loc-lite::config.storage')));
-        $repositoryName = $this->databaseToRepo($database);
-
     }
 }

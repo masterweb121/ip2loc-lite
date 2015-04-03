@@ -3,7 +3,6 @@
 namespace NemC\IP2LocLite\Commands;
 
 use Illuminate\Console\Command,
-    Symfony\Component\Console\Input\InputArgument,
     NemC\IP2LocLite\Services\IP2LocLiteService,
     NemC\IP2LocLite\Exceptions\NotLoggedInResponseException,
     NemC\IP2LocLite\Exceptions\UnsupportedDatabaseCommandException;
@@ -23,7 +22,7 @@ class DownloadCsvCommand extends Command
 
     public function fire()
     {
-        $database = $this->argument('database');
+        $database = Config::get('ip2loc-lite.database');
         try {
             $this->ip2LocLite->isSupportedDatabase($database);
         } catch (UnsupportedDatabaseCommandException $e) {
@@ -41,12 +40,5 @@ class DownloadCsvCommand extends Command
         $this->ip2LocLite->downloadCsv($database);
 
         $this->info('Latest version of IP2Location database ' . $database . ' has been downloaded');
-    }
-
-    public function getArguments()
-    {
-        return array(
-            array('database', InputArgument::REQUIRED, 'Database name to download'),
-        );
     }
 }
