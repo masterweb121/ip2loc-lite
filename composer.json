@@ -2,11 +2,12 @@
   "name": "nem-c/ip2loc-lite",
   "description": "[Laravel 4 integration for IP2Location Lite with database support and auto-download",
   "keywords"    : ["laravel", "ip2location", "lite"],
+  "license": "MIT",
   "authors": [
     {
       "name": "Nem C",
-      "email": "nem@codeanvil.co",
-      "homepage": "http://www.codeanvil.co",
+      "email": "me@nemc.io",
+      "homepage": "http://www.nemc.io/github",
       "role": "Developer"
     }
   ],
