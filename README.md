@@ -27,3 +27,17 @@ ex. php artisan ip2loclite:download-csv DB3LITE && php artisan ip2loclite:import
 Script will automatically create different tables for every IP2Location database you download.
 With default settings it would create table name prefixed ip2loc_ (ip2loc_db3 for DB3LITE IP2Location database)
 
+After you add it to composer you will have to create configuration file inside your app/config directory
+Add file name ip2loc-lite.php and use content below
+
+```php
+
+<?php
+
+return [
+    'username' => '', //your IP2Location account username
+    'password' => '', //your IP2Location account password
+    'rememberMe' => 'on',
+];
+
+```
