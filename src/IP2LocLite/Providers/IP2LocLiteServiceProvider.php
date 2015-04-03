@@ -62,7 +62,7 @@ class IP2LocLiteServiceProvider extends ServiceProvider
         $this->app['nemc_ip2loclite_import_csv'] = $this->app->share(function ($app) {
             return new ImportCsvCommand(
                 $app->make('NemC\IP2LocLite\Services\IP2LocLiteService'),
-                $app->make('NemC\IP2LocLite\Repositories\IP2LocRepository'),
+                $app->make('NemC\IP2LocLite\Storage\IP2LocStorageManager'),
                 $app->make('ZipArchive')
             );
         });

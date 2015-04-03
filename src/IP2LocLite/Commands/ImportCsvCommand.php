@@ -7,7 +7,7 @@ use ZipArchive,
     Illuminate\Support\Facades\Config,
     Symfony\Component\Console\Input\InputArgument,
     NemC\IP2LocLite\Services\IP2LocLiteService,
-    NemC\IP2LocLite\Repositories\IP2LocRepository,
+    NemC\IP2LocLite\Storage\IP2LocStorageManager as StorageManager,
     NemC\IP2LocLite\Exceptions\UnsupportedDatabaseCommandException,
     NemC\IP2LocLite\Exceptions\ArchiveMissingException;
 
@@ -18,14 +18,14 @@ class ImportCsvCommand extends Command
 
     protected $ip2LocLite;
     protected $zipper;
-    protected $ip2LocRepo;
+    protected $storageManager;
 
-    public function __construct(IP2LocLiteService $IP2LocLiteService, IP2LocRepository $IP2LocRepository, ZipArchive $zipArchive)
+    public function __construct(IP2LocLiteService $IP2LocLiteService, StorageManager $storageManager, ZipArchive $zipArchive)
     {
         parent::__construct();
         $this->ip2LocLite = $IP2LocLiteService;
         $this->zipper = $zipArchive;
-        $this->ip2LocRepo = $IP2LocRepository;
+        $this->storageManager = $storageManager;
     }
 
     public function fire()
@@ -60,12 +60,19 @@ class ImportCsvCommand extends Command
             return false;
         }
 
-        $this->ip2LocLite->loadRepository($database);
-        $this->ip2LocRepo->createTable();
+        $repo = $this->storageManager->getRepositoryForDatabase($this->ip2LocLite->databaseToRepoName($database));
+        //create table just in case
+        $repo->createTable();
+
+        $rows = 1;
         while ($data = fgetcsv($csvHandle)) {
-            $this->ip2LocRepo->insertOnDuplicateKeyUpdate($data);
+            $repo->insertOnDuplicateKeyUpdate($data);
             print_r($data);
+            $rows++;
         }
+
+        fclose($csvHandle);
+        $this->info('Finished - Processed ' . $rows . ' location entries for ' . $database);
     }
 
     public function getArguments()

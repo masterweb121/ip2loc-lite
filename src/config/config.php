@@ -9,11 +9,11 @@ return [
     ],
 
     'databases' => [
-        'DB1LITE', //IP-Country Database
+        //TODO: 'DB1LITE', //IP-Country Database
         'DB3LITE', //IP-Country-Region-City Database
-        'DB5LITE', //IP-Country-Region-City-Latitude-Longitude Database
-        'DB9LITE', //IP-Country-Region-City-Latitude-Longitude-ZIPCode Database
-        'DB11LITE', //IP-Country-Region-City-Latitude-Longitude-ZIPCode-TimeZone Database
+        //TODO: 'DB5LITE', //IP-Country-Region-City-Latitude-Longitude Database
+        //TODO: 'DB9LITE', //IP-Country-Region-City-Latitude-Longitude-ZIPCode Database
+        //TODO: 'DB11LITE', //IP-Country-Region-City-Latitude-Longitude-ZIPCode-TimeZone Database
     ],
 
     'storage' => 'mysql',

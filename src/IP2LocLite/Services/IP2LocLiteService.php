@@ -150,7 +150,7 @@ class IP2LocLiteService
         return 'IP2LOCATION-LITE-' . $dbVersion . '.CSV';
     }
 
-    public function databaseToRepo($database)
+    public function databaseToRepoName($database)
     {
         $dbVersion = str_replace('LITE', '', $database);
         return $dbVersion;
@@ -165,6 +165,5 @@ class IP2LocLiteService
         $storageEngine = ucfirst(strtolower(Config::get('ip2loc-lite::config.storage')));
         $repositoryName = $this->databaseToRepo($database);
 
-        App::bind("NemC\\IP2LocLite\\Repositories\\IP2LocRepository", "NemC\\IP2LocLite\\Repositories\\$storageEngine\\$repositoryName");
     }
 }

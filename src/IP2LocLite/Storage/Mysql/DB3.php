@@ -1,23 +1,29 @@
 <?php
 
-namespace NemC\IP2LocLite\Repositories\Mysql;
+namespace NemC\IP2LocLite\Storage\Mysql;
 
 use Illuminate\Support\Facades\DB,
     Illuminate\Support\Config,
-    NemC\IP2LocLite\Repositories\IP2LocRepository;
+    NemC\IP2LocLite\Storage\IP2LocStorageInterface;
 
-class DB3 implements IP2LocRepository
+class DB3 implements IP2LocStorageInterface
 {
+    protected $tablePrefix;
+    protected $tableName;
+    public function __construct($tablePrefix)
+    {
+        $this->tablePrefix = $tablePrefix;
+        $this->tableName = $tablePrefix . 'db3';
+    }
     /**
      *
      */
     public function createTable()
     {
-        $tableName = Config::get('ip2loc-lite.config.table_prefix') . 'db3';
         DB::connection()->disableQueryLog();
 
         DB::statement("
-              CREATE TABLE IF NOT EXISTS $tableName (
+              CREATE TABLE IF NOT EXISTS {$this->tableName} (
               long_from int(11) NOT NULL,
               long_to int(11) NOT NULL,
               country_iso2 varchar(2) NOT NULL,
@@ -34,10 +40,8 @@ class DB3 implements IP2LocRepository
      */
     public function insertOnDuplicateKeyUpdate($data)
     {
-        $tableName = Config::get('ip2loc-lite.config.table_prefix') . 'db3';
-
         DB::insert("
-            INSERT INTO $tableName
+            INSERT INTO {$this->tableName}
               (long_from, long_to, country_iso2, country_name, region_name, city_name)
               VALUES (?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
@@ -54,11 +58,9 @@ class DB3 implements IP2LocRepository
      */
     public function getByLongIp($longIp)
     {
-        $tableName = Config::get('ip2loc-lite.config.table_prefix') . 'db3';
-
         $results = DB::select("
             SELECT *
-            FROM $tableName
+            FROM {$this->tableName}
             WHERE long_from >= ?
             AND long_to <= ?
             LIMIT 1
