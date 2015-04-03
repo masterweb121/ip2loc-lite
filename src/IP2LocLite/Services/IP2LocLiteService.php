@@ -32,9 +32,12 @@ class IP2LocLiteService
 
     public function __construct(CurlClient $curlClient)
     {
-        $this->username = Config::get('ip2loc-lite::config.user.username');
-        $this->password = Config::get('ip2loc-lite::config.user.password');
-        $this->rememberMe = Config::get('ip2loc-lite::config.user.rememberMe');
+        $this->username = Config::get('ip2loc-lite.username');
+        $this->password = Config::get('ip2loc-lite.password');
+        $this->rememberMe = Config::get('ip2loc-lite.rememberMe');
+        if ($this->rememberMe !== 'on') {
+            $this->rememberMe = 'off';
+        }
 
         $this->loginPagePath = Config::get('ip2loc-lite::config.loginPagePath');
         $this->accountPagePath = Config::get('ip2loc-lite::config.accountPagePath');

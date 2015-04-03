@@ -2,7 +2,8 @@
 
 namespace NemC\IP2LocLite\Providers;
 
-use Illuminate\Support\ServiceProvider,
+use Exception,
+    Illuminate\Support\ServiceProvider,
     Illuminate\Support\Facades\File,
     NemC\IP2LocLite\Commands\LoginCommand,
     NemC\IP2LocLite\Commands\DownloadCsvCommand,
@@ -15,6 +16,11 @@ class IP2LocLiteServiceProvider extends ServiceProvider
         $this->package('nem-c/ip2loc-lite');
 
         $app = $this->app;
+
+        //do we have config?
+        $this->verifyConfig($app);
+
+
         $storagePath = $app['config']->get('ip2loc-lite::config.storagePath');
         if (File::isDirectory($storagePath) === false) {
             File::makeDirectory($storagePath, 0777);
@@ -67,5 +73,17 @@ class IP2LocLiteServiceProvider extends ServiceProvider
             );
         });
         $this->commands('nemc_ip2loclite_import_csv');
+    }
+
+    protected function verifyConfig($app)
+    {
+        $config = $app['config']->get('ip2loc-lite');
+        if (empty($config) === true) {
+            throw new Exception('Looks like you are missing configuration for ip2loc-lite');
+        }
+
+        if (empty($config['username']) === true || empty($config['password']) === true) {
+            throw new Exception('You need to provide your IP2Location username and password');
+        }
     }
 }

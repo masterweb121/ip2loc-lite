@@ -1,5 +1,6 @@
 # IP2LocLite
 Laravel 4 integration for IP2Location Lite with database support and download.
+
 You can consider this is Poor Man's IP2Location script where you have everything stored locally 
 so there is no fear that your 3rd party service would be down.
 
