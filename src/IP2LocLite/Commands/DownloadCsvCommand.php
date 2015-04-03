@@ -2,7 +2,8 @@
 
 namespace NemC\IP2LocLite\Commands;
 
-use Illuminate\Console\Command,
+use Illuminate\Console\Config,
+    Illuminate\Console\Command,
     NemC\IP2LocLite\Services\IP2LocLiteService,
     NemC\IP2LocLite\Exceptions\NotLoggedInResponseException,
     NemC\IP2LocLite\Exceptions\UnsupportedDatabaseCommandException;
