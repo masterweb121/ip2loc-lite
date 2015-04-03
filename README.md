@@ -59,12 +59,10 @@ Get information about IP if exists
 ```php
 // ...
 $geoForIp = IP2LocLite::get('2.16.0.234');
-
 // ...
 ```
-As result you should have something like
-```php
-/**
+As result you should receive object like this
+
 object(stdClass)[521]
     public 'long_from' => int 34603008
     public 'long_to' => int 34603263
@@ -72,8 +70,7 @@ object(stdClass)[521]
     public 'country_name' => string 'United States' (length=13)
     public 'region_name' => string 'California' (length=10)
     public 'city_name' => string 'Los Angeles' (length=11)
-*/
-```
+
 
 Configuration
 -------------
