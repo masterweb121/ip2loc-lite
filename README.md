@@ -31,7 +31,6 @@ After you add it to composer you will have to create configuration file inside y
 Add file name ip2loc-lite.php and use content below
 
 ```php
-
 <?php
 
 return [
@@ -39,5 +38,4 @@ return [
     'password' => '', //your IP2Location account password
     'rememberMe' => 'on',
 ];
-
 ```
