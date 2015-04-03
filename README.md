@@ -29,7 +29,7 @@ Edit `composer.json` and add:
 ```json
 {
     "require": {
-        "packages/nem-c/ip2loc-lite": "~1.0"
+        "nem-c/ip2loc-lite": "~1.0"
     }
 }
 ```
