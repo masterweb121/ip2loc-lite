@@ -18,17 +18,53 @@ Script brings 3 new commands:
 - ip2loclite:download-csv <database name to download>
 - ip2loclite:import-csv <database name to download>
 
-You can create cron entry so complete process is automated
-Since there are 2 different commands you can make time difference when scripts would run
-Or chain them inside call
+Installation
+------------
 
-ex. php artisan ip2loclite:download-csv DB3LITE && php artisan ip2loclite:import-csv
+It can be found on [Packagist](https://packagist.org/packages/nem-c/ip2loc-lite).
+The recommended way is through [composer](http://getcomposer.org).
 
-Script will automatically create different tables for every IP2Location database you download.
-With default settings it would create table name prefixed ip2loc_ (ip2loc_db3 for DB3LITE IP2Location database)
+Edit `composer.json` and add:
 
-After you add it to composer you will have to create configuration file inside your app/config directory
-Add file name ip2loc-lite.php and use content below
+```json
+{
+    "require": {
+        "packages/nem-c/ip2loc-lite": "~1.0"
+    }
+}
+```
+
+Find the `providers` array key in `config/app.php` and register the **Geocoder Service Provider**.
+
+```php
+'providers' => array(
+    // ...
+
+    'NemC\IP2LocLite\Providers\IP2LocLiteServiceProvider',
+)
+```
+
+Usage
+-----
+
+```bash
+$ php artisan ip2loclite:download-csv DB3LITE
+```
+
+```bash
+$ php ip2loclite:import-csv DB3LITE
+```
+
+Automate whole process by chaining those 2 commands like
+```bash
+$ php artisan ip2loclite:download-csv DB3LITE && php ip2loclite:import-csv DB3LITE
+```
+
+
+Configuration
+-------------
+
+Add file name ip2loc-lite.php to app/config and use content below
 
 ```php
 <?php
@@ -39,3 +75,10 @@ return [
     'rememberMe' => 'on',
 ];
 ```
+
+License
+-------
+
+IP2Location LITE is released under the MIT License. See the bundled
+[LICENSE](https://github.com/nem-c/ip2loc-lite/blob/master/LICENSE.txt)
+file for details.
